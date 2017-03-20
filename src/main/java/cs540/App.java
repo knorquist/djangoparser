@@ -33,6 +33,7 @@ public class App {
                 "they used Django. This utility merely scans for things developers often forget about.\n" +
                 "=====================================================================================\n");
 
+        //Find Page
         try {
             Document doc = Jsoup.connect(url).get(); //Download HTML from URL
             System.out.println("Found Page. Testing...");
@@ -101,6 +102,22 @@ public class App {
                            "\"Django\" found:              |" + django + " time(s).\n" +
                            "\"csrfmiddlewaretoken\" found? |" + csrfmiddlewaretoken + "\n" +
                            "=====================================================================================");
+
+        if(djangoAdmin == true && django > 0 && csrfmiddlewaretoken == true) {
+            System.out.println("This site is probably built using Django.");
+        }
+        else if(djangoAdmin == false && django > 0 && csrfmiddlewaretoken == true) {
+            System.out.println("This site could have been built using Django.");
+        }
+        else if(djangoAdmin == false && django > 0 && csrfmiddlewaretoken == false) {
+            System.out.println("\"Django\" was found, but hard to tell if Django was used.");
+        }
+        else if(djangoAdmin == false && django == 0 && csrfmiddlewaretoken == false) {
+            System.out.println("Unable to determine if Django was used.");
+        }
+        else {
+            System.out.println("Unable to determine if Django was used.");
+        }
         System.exit(1);
     }
 }
